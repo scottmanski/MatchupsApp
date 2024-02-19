@@ -14,14 +14,6 @@ body {
   margin: 18px;
 }
 
-.col-sm-2 {
-    width: 13%;
-}
-
-.col-sm-10 {
-    width: 87%;
-}
-
 .container-fluid {
     padding-right: 0px;
     padding-left: 0px;

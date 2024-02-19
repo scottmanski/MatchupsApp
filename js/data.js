@@ -1,34 +1,54 @@
 
-import AllQ from '../data/All Qualifier Civ Data.json' assert { type: 'json' };
-import AllME from '../data/All Main Event Civ Data.json' assert { type: 'json' };
-import AllQME from '../data/All Qualifier Main Event Civ Data.json' assert { type: 'json' };
-import ArabiaQ from '../data/Arabia Qualifier Civ Data.json' assert { type: 'json' };
-import ArabiaME from '../data/Arabia Main Event Civ Data.json' assert { type: 'json' };
-import ArabiaQME from '../data/Arabia Qualifier Main Event Civ Data.json' assert { type: 'json' };
-import CrossQ from '../data/Cross Qualifier Civ Data.json' assert { type: 'json' };
-import CrossME from '../data/Cross Main Event Civ Data.json' assert { type: 'json' };
-import CrossQME from '../data/Cross Qualifier Main Event Civ Data.json' assert { type: 'json' };
-import GoldRushQ from '../data/Gold Rush Qualifier Civ Data.json' assert { type: 'json' };
-import GoldRushME from '../data/Gold Rush Main Event Civ Data.json' assert { type: 'json' };
-import GoldRushQME from '../data/Gold Rush Qualifier Main Event Civ Data.json' assert { type: 'json' };
-import IslandsQ from '../data/Islands Qualifier Civ Data.json' assert { type: 'json' };
-import IslandsME from '../data/Islands Main Event Civ Data.json' assert { type: 'json' };
-import IslandsQME from '../data/Islands Qualifier Main Event Civ Data.json' assert { type: 'json' };
-import MudflowQ from '../data/Mudflow Qualifier Civ Data.json' assert { type: 'json' };
-import MudflowME from '../data/Mudflow Main Event Civ Data.json' assert { type: 'json' };
-import MudflowQME from '../data/Mudflow Qualifier Main Event Civ Data.json' assert { type: 'json' };
-import QuarryQ from '../data/Quarry Qualifier Civ Data.json' assert { type: 'json' };
-import QuarryME from '../data/Quarry Main Event Civ Data.json' assert { type: 'json' };
-import QuarryQME from '../data/Quarry Qualifier Main Event Civ Data.json' assert { type: 'json' };
-import SlopesQ from '../data/Slopes Qualifier Civ Data.json' assert { type: 'json' };
-import SlopesME from '../data/Slopes Main Event Civ Data.json' assert { type: 'json' };
-import SlopesQME from '../data/Slopes Qualifier Main Event Civ Data.json' assert { type: 'json' };
+import Data from '../data/Data.json' assert { type: 'json' };
 
-var dt;
+var dt = Data;
+
+//console.log(Data);
+
+//var data_filter = Data.filter(element => element.Player_Civ == "Franks")
+//console.log(data_filter);
+
+
+function formatCiv (civ) {
+  if (!civ.id) {
+    return civ.text;
+  }
+  if (civ.element.value == "Any") {
+    return civ.text;
+  }
+  var baseUrl = "Civs";
+  var $civ = $(
+    '<span style="font-size: 18px; font-weight: 400; white-space: nowrap;"><img src="' + baseUrl + '/' + civ.element.value + '.png" class="img-flag" /> ' + civ.text + '</span>'
+  );
+  return $civ;
+};
+
+$(".js-example-templating").select2({
+  templateResult: formatCiv,
+  templateSelection: formatCiv,
+  minimumResultsForSearch: Infinity
+});
+
+$('.js-example-templating.civ1').on('change', function (e)
+{
+  if (document.querySelector('[class="select2-selection select2-selection--single"]').children[0].innerText == "Any") {
+    document.getElementById("otherciv").style.display = "none";
+  } else {
+    document.getElementById("otherciv").style.display = "inline-block";
+  }
+  updateData();
+});
+
+$('.js-example-templating').on('change', function (e)
+{
+  updateData();
+});
+
 
 function callback(mutationsList) {
   mutationsList.forEach((mutation) => {
-    if (mutation.attributeName === "class") {
+    //console.log(mutation.target);
+    if (mutation.attributeName === "data-active") {
       updateData();
     }
   });
@@ -66,26 +86,34 @@ function stage(x) {
   
   if (y.classList.contains('active')) {
     y.children[0].style.display = "none";
+    y.setAttribute("data-active", "false");
   } else {
     y.children[0].style.display = "inline-block";
+    y.setAttribute("data-active", "true");
   }
-
 }
 
 function updateData() {
+  //console.log("updating data");
   dt.clear();
-  var file = "";
-  if (document.querySelector("#qualifier").classList.contains('active')) {
-    file += "Q";
+  var dt_new = Data; //Data.filter(element => element.Player_Civ == "Franks")
+  var civ1 = document.querySelector('[class="select2-selection select2-selection--single"]').children[0].title;
+  var civ2 = document.querySelectorAll('[class="select2-selection select2-selection--single"]')[1].children[0].title;
+  if (document.querySelector("#qualifier").getAttribute("data-active") == "false") {
+    dt_new = dt_new.filter(element => element.Stage != "Qualifier");
   }
-  if (document.querySelector("#mainevent").classList.contains('active')) {
-    file += "ME";
+  if (document.querySelector("#mainevent").getAttribute("data-active") == "false") {
+    dt_new = dt_new.filter(element => element.Stage != "Main Event");
   }
-  if (file != "") {
-    file = document.getElementById('MCmap').value + file;
-    //console.log(file);
-    dt.rows.add(eval(file));
+  if (civ1 != "Any") {
+    if (civ2 == "Any") {
+      dt_new = dt_new.filter(element => element.Player_Civ == civ1 | element.Opp_Civ == civ1);
+    } else {
+      dt_new = dt_new.filter(element => (element.Player_Civ == civ1 & element.Opp_Civ == civ2) | (element.Player_Civ == civ2 & element.Opp_Civ == civ1));
+    }
   }
+  //console.log(dt_new);
+  dt.rows.add(dt_new);
   dt.draw();
 }
 
@@ -95,25 +123,20 @@ document.querySelector("#qualifier").addEventListener("click", stage);
 //new DataTable('#example', {
 
 dt = $('#example').DataTable( {
-      order: [[1, 'desc']],
-    pageLength: 100,
-    dom: "t",
+  lengthMenu: [25, 50, 75, 100],
+    data: dt,
     columns: [
-      { title: 'Civilization' },
-      { title: 'Wins' },
-      { title: 'Losses' },
-      { title: 'Win%' },
-      { title: 'First Pick' },
-      { title: 'Pick' },
-      { title: 'Ban' },
-      { title: 'Pass' },
-      { title: 'First Pick%' },
-      { title: 'Pick%' },
-      { title: 'Ban%' },
-      { title: 'Pass%' },
-      { title: 'Played%' }
+       { data: 'Stage', title: 'Stage', className: 'dt-center' },
+       { data: 'Round', title: 'Round', className: 'dt-center' },
+       { data: 'Game', title: 'Game', className: 'dt-center' },
+       { data: 'Map', title: 'Map', className: 'dt-center' },
+       { data: 'Player_Civ2', title: 'Civ', className: 'dt-right' },
+       { data: 'Player', title: 'Player', className: 'dt-right' },
+       { data: 'vs', title: '', orderable: false, className: 'dt-center' },
+       { data: 'Opponent', title: 'Opponent' },
+       { data: 'Opp_Civ2', title: 'Civ' },
+       { data: 'Winner', title: 'Winner', className: 'dt-center' },
+       { data: 'Winning_Civ2', title: 'Winning Civ', className: 'dt-center' }
       ],
-      data: AllQ,
-
     autoWidth: true
 });
