@@ -123,7 +123,6 @@ document.querySelector("#qualifier").addEventListener("click", stage);
 //new DataTable('#example', {
 
 dt = $('#example').DataTable( {
-  lengthMenu: [25, 50, 75, 100],
     data: dt,
     columns: [
        { data: 'Stage', title: 'Stage', className: 'dt-center' },
