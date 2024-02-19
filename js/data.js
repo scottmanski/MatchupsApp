@@ -136,7 +136,7 @@ dt = $('#example').DataTable( {
        { data: 'Opponent', title: 'Opponent' },
        { data: 'Opp_Civ2', title: 'Civ' },
        { data: 'Winner', title: 'Winner', className: 'dt-center' },
-       { data: 'Winning_Civ2', title: 'Winning Civ', className: 'dt-center' }
+       { data: 'Winning_Civ2', title: 'Winning Civ' }
       ],
     autoWidth: true
 });
