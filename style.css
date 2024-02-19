@@ -1,0 +1,108 @@
+html {
+    background-color: #131521;
+    background: radial-gradient(circle at 50% 150%, #31516e 0, #131521 60%);
+    background-size: cover;
+    height: fit-content;
+    
+}
+
+body {
+  background-color: transparent;
+  font-family: Garamond;
+  font-size: 18px;
+  color: #fff;
+  margin: 18px;
+}
+
+.col-sm-2 {
+    width: 13%;
+}
+
+.col-sm-10 {
+    width: 87%;
+}
+
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.navbar>.container-fluid .navbar-brand {
+    margin-left: 0px;
+}
+
+.nav>li {
+    font-size: 22px;
+}
+
+div[value="Maps"] {
+  margin: 1em;
+}
+
+#MCivTable td, #MapTable td, th {
+  color: #E9F4F8;
+  border-bottom-color: rgba(140, 130, 115, 0.15) !important;
+  border-top-color: rgba(140, 130, 115, 0.15) !important;
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+#map_image {
+  color: #E9F4F8;
+}
+
+.modal-content {
+  background-color: #323d4b;
+  color: #E9F4F8;
+}
+
+input {
+  color: #323d4b;
+}
+
+tr>td{
+  border-bottom-color: white !important;
+  border-right-color: white !important;
+}
+
+select {
+  background-color: #323D4B !important;
+}
+
+
+.btn-group-vertical>.btn.active, .btn-group-vertical>.btn:active, .btn-group>.btn.active, .btn-group>.btn:active {
+    background-color: #323D4B !important;
+    color: white !important;
+}
+
+.btn-group-vertical>.btn:hover, .btn-group>.btn:hover {
+    background-color: #323D4B !important;
+    color: grey !important;
+}
+
+.btn-default.active, .btn-default:active, .open>.dropdown-toggle.btn-default {
+    color: white !important;
+    background-color: #323D4B !important;
+}
+.well {
+  background-color: #323D4B;
+}
+
+label {
+  color: white;
+}
+
+.btn {
+  color: #000;
+}
+
+.btn:hover {
+  color: #333;
+}
+
+option {
+  cursor: pointer;
+}
+
