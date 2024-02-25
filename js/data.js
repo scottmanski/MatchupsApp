@@ -1,5 +1,8 @@
 
 import Data from '../data/Data.json' assert { type: 'json' };
+import ts from '../data/ts.json' assert { type: 'json' };
+
+document.getElementById("Mlastupdate").children[0].innerText = ts;
 
 var dt = Data;
 
