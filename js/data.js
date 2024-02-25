@@ -58,9 +58,9 @@ var mapInput = document.getElementById('MCmap');
 mapInput.onchange = (event) => {
 
   var map = document.getElementById('MCmap').value;
-  if (map == "GoldRush") {
-    map = "Gold Rush";
-  }
+  //if (map == "GoldRush") {
+  //  map = "Gold Rush";
+  //}
   if (map == "All") {
     document.getElementById('map_image').style.display = "none";
   } else {
@@ -99,6 +99,7 @@ function updateData() {
   var dt_new = Data; //Data.filter(element => element.Player_Civ == "Franks")
   var civ1 = document.querySelector('[class="select2-selection select2-selection--single"]').children[0].title;
   var civ2 = document.querySelectorAll('[class="select2-selection select2-selection--single"]')[1].children[0].title;
+  var map = document.getElementById('MCmap').value;
   if (document.querySelector("#qualifier").getAttribute("data-active") == "false") {
     dt_new = dt_new.filter(element => element.Stage != "Qualifier");
   }
@@ -111,6 +112,9 @@ function updateData() {
     } else {
       dt_new = dt_new.filter(element => (element.Player_Civ == civ1 & element.Opp_Civ == civ2) | (element.Player_Civ == civ2 & element.Opp_Civ == civ1));
     }
+  }
+  if (map != "All") {
+    dt_new = dt_new.filter(element => element.Map == map);
   }
   //console.log(dt_new);
   dt.rows.add(dt_new);
