@@ -29,7 +29,7 @@ function formatCiv (civ) {
 $(".js-example-templating").select2({
   templateResult: formatCiv,
   templateSelection: formatCiv,
-  minimumResultsForSearch: Infinity
+  //minimumResultsForSearch: Infinity
 });
 
 $('.js-example-templating.civ1').on('change', function (e)
