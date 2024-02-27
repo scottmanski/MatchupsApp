@@ -2,16 +2,16 @@
 import Data from '../data/Data.json' assert { type: 'json' };
 import ts from '../data/ts.json' assert { type: 'json' };
 
-import { watchFile } from 'node:fs';
+//import { watchFile } from 'node:fs';
 
 document.getElementById("Mlastupdate").children[0].innerText = ts;
 
 
 
-watchFile("./data/Data.json", (curr, prev) => {
-  console.log(`the current mtime is: ${curr.mtime}`);
-  console.log(`the previous mtime was: ${prev.mtime}`);
-}); 
+//watchFile("./data/Data.json", (curr, prev) => {
+//  console.log(`the current mtime is: ${curr.mtime}`);
+//  console.log(`the previous mtime was: ${prev.mtime}`);
+//}); 
 
 var dt = Data;
 
