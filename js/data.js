@@ -4,12 +4,12 @@
 //import ts from '../data/ts.json' assert { type: 'json' };
 
 var Data, dt, previous;
-$.getJSON('./data/Data.json', function( data ) {
-  Data = data;
-  updateData();
-});
+//$.getJSON('./data/Data.json', function( data ) {
+//  Data = data;
+//  updateData();
+//});
 
-function dataUpdate() {
+//function dataUpdate() {
   $.ajax({
     dataType: "json",
     url: './data/Data.json',
@@ -19,7 +19,7 @@ function dataUpdate() {
       updateData();
     }
 });
-}
+//}
 
 
 
